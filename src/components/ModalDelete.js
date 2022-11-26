@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./ModalDelete.css";
 
 function ModalDelete(props) {
