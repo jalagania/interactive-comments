@@ -1,13 +1,61 @@
-body {
+*,
+::before,
+::after {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: inherit;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+@media (max-width: 425px) {
+  html {
+    font-size: 55%;
+  }
+}
+
+body {
+  font-family: "Rubik", sans-serif;
+  font-size: 1.6rem;
+  background-color: #f5f6fa;
+}
+
+.btn {
+  font-family: inherit;
+  text-transform: uppercase;
+  padding: 1.5rem 3rem;
+  color: #ffffff;
+  border: none;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn:active {
+  transform: scale(0.95);
+}
+
+.margin-top {
+  margin-top: 1rem;
+}
+
+@media (max-width: 425px) {
+  .modify-phone {
+    flex-direction: column;
+    margin: 0;
+  }
+}
+
+.padding-zero {
+  padding: 0 !important;
+}
+
+.flex-column {
+  flex-direction: column;
+  align-items: end !important;
+}
+
+.hidden {
+  display: none;
 }

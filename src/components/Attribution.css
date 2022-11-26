@@ -1,0 +1,15 @@
+.attribution {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.attribution a:link,
+.attribution a:visited {
+  font-weight: 500;
+  color: #5457b6;
+  text-decoration: none;
+}
+
+.attribution a:hover {
+  text-decoration: underline;
+}
