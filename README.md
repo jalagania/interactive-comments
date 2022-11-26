@@ -2,11 +2,11 @@
 
 ### Links
 
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Live Site URL: https://interactive-comments-beka.netlify.app
 
 ### Built with
 
 - HTML5
-- SCSS (Flexbox, CSS custom properties)
-- JS
+- CSS (Flexbox)
+- REACT
 - JSON
