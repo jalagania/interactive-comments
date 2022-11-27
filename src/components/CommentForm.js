@@ -30,8 +30,11 @@ function CommentForm(props) {
 
   function handelCommentSubmit(event) {
     event.preventDefault();
-    if (props.textareaValue.trim() !== "") {
-      if (event.target.textContent === "send") {
+    if (textareaRef.current.value.trim() !== "") {
+      if (
+        event.target.textContent === "send" ||
+        document.activeElement.nextElementSibling?.textContent === "send"
+      ) {
         props.setCommentsData((prevState) => {
           return {
             ...prevState,
@@ -39,7 +42,7 @@ function CommentForm(props) {
               ...prevState.comments,
               {
                 id: prevState.comments.length + 1,
-                content: props.textareaValue.trim(),
+                content: textareaRef.current.value.trim(),
                 createdAt: `${getTime()} Today`,
                 score: 0,
                 user: {
@@ -56,8 +59,10 @@ function CommentForm(props) {
       }
 
       if (
-        event.target.textContent === "reply" &&
-        props.textareaValue.trim() !== `@${props.username}`
+        (event.target.textContent === "reply" &&
+          textareaRef.current.value.trim() !== `@${props.username}`) ||
+        (document.activeElement.nextElementSibling?.textContent === "reply" &&
+          textareaRef.current.value.trim() !== `@${props.username}`)
       ) {
         props.setShowReplyForm(false);
         props.setCommentsData((prevState) => {
@@ -68,9 +73,14 @@ function CommentForm(props) {
               {
                 id: Math.random() * 1000,
                 content:
-                  props.textareaValue.split(" ")[0] === `@${props.username}`
-                    ? props.textareaValue.split(" ").slice(1).join(" ").trim()
-                    : props.textareaValue.trim(),
+                  textareaRef.current.value.split(" ")[0] ===
+                  `@${props.username}`
+                    ? textareaRef.current.value
+                        .split(" ")
+                        .slice(1)
+                        .join(" ")
+                        .trim()
+                    : textareaRef.current.value.trim(),
                 createdAt: `${getTime()} Today`,
                 score: 0,
                 replyingTo: props.username,
@@ -88,8 +98,10 @@ function CommentForm(props) {
       }
 
       if (
-        event.target.textContent === "update" &&
-        props.textareaValue.trim() !== `@${props.replyingTo}`
+        (event.target.textContent === "update" &&
+          textareaRef.current.value.trim() !== `@${props.replyingTo}`) ||
+        (document.activeElement.nextElementSibling?.textContent === "update" &&
+          textareaRef.current.value.trim() !== `@${props.replyingTo}`)
       ) {
         props.setShowEditForm(false);
         props.setCommentsData((prevState) => {
@@ -100,9 +112,14 @@ function CommentForm(props) {
               {
                 ...prevState.comments[props.index],
                 content:
-                  props.textareaValue.split(" ")[0] === `@${props.replyingTo}`
-                    ? props.textareaValue.split(" ").slice(1).join(" ").trim()
-                    : props.textareaValue.trim(),
+                  textareaRef.current.value.split(" ")[0] ===
+                  `@${props.replyingTo}`
+                    ? textareaRef.current.value
+                        .split(" ")
+                        .slice(1)
+                        .join(" ")
+                        .trim()
+                    : textareaRef.current.value.trim(),
                 createdAt: `${getTime()} Today (edited)`,
               },
               ...prevState.comments.slice(props.index + 1),
@@ -112,6 +129,22 @@ function CommentForm(props) {
       }
     }
   }
+
+  useEffect(() => {
+    function handleEnterpress(event) {
+      if (
+        document.activeElement === textareaRef.current &&
+        event.key === "Enter" &&
+        !event.shiftKey
+      ) {
+        handelCommentSubmit(event);
+      }
+    }
+    document.addEventListener("keydown", handleEnterpress);
+    return () => {
+      document.removeEventListener("keydown", handleEnterpress);
+    };
+  }, []);
 
   return (
     <form
